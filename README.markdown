@@ -1,4 +1,4 @@
-# @level237/file-size-formatter
+# @martindev/file-size-formatter
 
 A JavaScript utility to convert file sizes into human-readable formats (e.g., 1024 → “1 KB”).
 
