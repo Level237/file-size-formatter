@@ -8,6 +8,13 @@
   },
   "keywords":  ["file", "size", "formatter", "bytes", "utils"],
   "author": "Martin dev 237",
-  "license": "MIT"
-  
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Level237/file-size-formatter.git"
+  },
+  "homepage": "https://github.com/Level237/file-size-formatter#readme",
+  "bugs": {
+    "url": "https://github.com/Level237/file-size-formatter/issues"
+  }
 }
