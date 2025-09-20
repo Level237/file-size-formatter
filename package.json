@@ -1,6 +1,6 @@
 {
   "name": "@martindev237/file-size-formatter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Un utilitaire pour formater des tailles de fichiers en unités lisibles (Bytes, KB, MB, etc.)",
   "main": "index.js",
   "scripts": {
