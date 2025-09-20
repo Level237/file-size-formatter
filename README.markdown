@@ -1,4 +1,4 @@
-# @martindev237/file-size-formatter
+# martindev237/file-size-formatter
 
 Un utilitaire JavaScript pour convertir des tailles de fichiers en formats lisibles par l'humain (ex. 1024 → "1 KB").
 
@@ -7,12 +7,12 @@ Ce package simplifie l'affichage des tailles de fichiers dans vos applications, 
 
 ## Installation
 ```bash
-npm install @votre-nom/file-size-formatter
+npm install martindev237/file-size-formatter
 ```
 
 ## Utilisation
 ```javascript
-const formatFileSize = require('@martindev237/file-size-formatter');
+const formatFileSize = require('martindev237/file-size-formatter');
 
 console.log(formatFileSize(1024)); // "1 KB"
 console.log(formatFileSize(123456789, 1)); // "117.7 MB"
