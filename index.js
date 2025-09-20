@@ -1,4 +1,6 @@
 function formatFileSize(bytes,decimal=2){
+
+    if (typeof bytes !== 'number' || bytes < 0) throw new Error('Bytes must be a non-negative number');
     if(bytes===0) return "0 Bytes";
 
     const k = 1024;
