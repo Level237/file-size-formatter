@@ -1,4 +1,4 @@
-const {formatFileSize,compressImage, compressMultipleImages} = require('../index.js');
+const formatFileSize = require('../index.js');
 
 test('formate correctement 1024 bytes en 1 KB', () => {
     expect(formatFileSize(1024)).toBe('1 KB');
