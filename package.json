@@ -1,6 +1,6 @@
 {
   "name": "@martindev237/file-size-formatter",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A utility for manipulating files: formatting sizes, calculating hashes, compressing images",
   "main": "index.js",
   "scripts": {
