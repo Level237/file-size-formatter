@@ -18,8 +18,8 @@ test('formate correctement 1024 bytes en 1 KB', () => {
   });
 
   describe('compressImage and compressMultipleImages', () => {
-    const testFilePath1 = path.join(__dirname, 'assets/552644391_17985376394910694_7213507442296316716_n.jpg');
-    const testFilePath2 = path.join(__dirname, 'assets/552644391_17985376394910694_7213507442296316716_n.jpg');
+    const testFilePath1 = path.join(__dirname, 'assets/518403136_122180384150290270_1228563726905246380_n.jpg');
+    const testFilePath2 = path.join(__dirname, 'assets/518403136_122180384150290270_1228563726905246380_n.jpg');
   
     beforeAll(() => {
       // Créez un dossier assets et placez-y de vraies images pour des tests précis
