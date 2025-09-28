@@ -1,5 +1,5 @@
 const sharp = require('sharp');
-
+const fs = require('fs').promises
 /**
  * Formate une taille en bytes en chaîne lisible.
  * @param {number} bytes - Taille en bytes.
@@ -80,24 +80,27 @@ async function compressImage(input,options={}){
 
 async function compressMultipleImages(inputs, options = {}) {
 
-    const missingFiles=[];
-
-    for(const input of inputs){
-
-        if(Buffer.isBuffer(input)){
+    const missingFiles = [];
+    
+    for (const input of inputs) {
+        // Si c'est un Buffer, pas besoin de vérifier l'existence
+        if (Buffer.isBuffer(input)) {
             continue;
         }
-        if(typeof input ==='string'){
-            try{
+        
+        // Si c'est un chemin de fichier, vérifier qu'il existe
+        if (typeof input === 'string') {
+            try {
                 await fs.access(input);
-            }catch(err){
+            } catch (error) {
                 missingFiles.push(input);
             }
         }
     }
-
-    if(missingFiles.length>0){
-        throw new Error(`Les fichiers suivant n'existe pas : ${missingFiles.join(', ')}`)
+    
+    // Lever une exception si des fichiers sont manquants
+    if (missingFiles.length > 0) {
+        throw new Error(`Fichiers d'images non trouvés: ${missingFiles.join(', ')}`);
     }
     const promises = inputs.map((input) => compressImage(input, options));
     return Promise.all(promises);
