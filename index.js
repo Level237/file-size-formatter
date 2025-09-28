@@ -74,7 +74,7 @@ async function compressImage(input,options={}){
 
     return buffer;
     }catch(err){
-        throw new Error(`Erreur lors de la compression de l'image`)
+        throw new Error(`Erreur lors de la compression de l'image ${err}`)
     }
 }
 
