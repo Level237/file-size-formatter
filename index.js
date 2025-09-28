@@ -79,6 +79,26 @@ async function compressImage(input,options={}){
 }
 
 async function compressMultipleImages(inputs, options = {}) {
+
+    const missingFiles=[];
+
+    for(const input of inputs){
+
+        if(Buffer.isBuffer(input)){
+            continue;
+        }
+        if(typeof input ==='string'){
+            try{
+                await fs.access(input);
+            }catch(err){
+                missingFiles.push(input);
+            }
+        }
+    }
+
+    if(missingFiles.length>0){
+        throw new Error(`Les fichiers suivant n'existe pas : ${missingFiles.join(', ')}`)
+    }
     const promises = inputs.map((input) => compressImage(input, options));
     return Promise.all(promises);
 }

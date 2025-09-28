@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@martindev237/file-size-formatter": "^1.0.0"
+    "@martindev237/file-size-formatter": "^1.1.0"
   }
 }
