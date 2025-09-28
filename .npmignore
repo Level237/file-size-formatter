@@ -1,0 +1,5 @@
+__tests__/ assets/ test-formatter/ 
+
+.git .gitignore node_modules/ *.log coverage/
+
+*.md LICENSE *.ts *.tsx *.js.map *.d.ts
