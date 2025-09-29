@@ -2,7 +2,7 @@
   
   "name": "@lunel/file-size-formatter",
   
-  "version": "1.0.3",
+  "version": "1.0.4",
   
   "description": "A utility for manipulating files: formatting sizes, calculating hashes, compressing images",
   
@@ -11,28 +11,75 @@
   "module": "index.mjs",
   
   "types": "dist/index.d.ts",
+  
   "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./index.js"
-      }
-    },
-    "./dist/types": {
-      "import": "./dist/types.d.ts",
-      "require": "./dist/types.d.ts"
-    }
+  
+    
+  ".": {
+  
+    
+    
+  "import": {
+  
+    
+    
+    
+  "types": "./dist/index.d.ts",
+  
+    
+    
+    
+  "default": "./index.mjs"
+  
+    
+    
+  },
+  
+    
+    
+  "require": {
+  
+    
+    
+    
+  "types": "./dist/index.d.ts",
+  
+    
+    
+    
+  "default": "./index.js"
+  
+    
+    
+  }
+  
+    
+  },
+  
+    
+  "./dist/types": {
+  
+    
+    
+  "import": "./dist/types.d.ts",
+  
+    
+    
+  "require": "./dist/types.d.ts"
+  
+    
+  }
+  
   },
   
   "files": [
   
     
   "index.js",
+  
+    
   "index.mjs",
+  
     
   "dist/",
   
