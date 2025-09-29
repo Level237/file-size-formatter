@@ -1,8 +1,8 @@
 {
   
-  "name": "@martindev237/file-size-formatter",
+  "name": "@lunel/file-size-formatter",
   
-  "version": "1.2.4",
+  "version": "0.0.1",
   
   "description": "A utility for manipulating files: formatting sizes, calculating hashes, compressing images",
   
@@ -123,7 +123,7 @@
   
   ],
   
-  "author": "Martin dev",
+  "author": "lunel",
   
   "license": "MIT",
   

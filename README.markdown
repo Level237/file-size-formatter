@@ -1,11 +1,11 @@
-# @martindev237/file-size-formatter
+# @lunel/file-size-formatter
 
 A JavaScript utility for manipulating files: formatting sizes,compressing images.
 
 ## Installation
 
 ```bash
-npm install @martindev237/file-size-formatter
+npm install @lunel/file-size-formatter
 ```
 
 ## Dépendances
@@ -19,7 +19,7 @@ npm install @martindev237/file-size-formatter
 Formats a size in bytes into a readable string.
 
 ```Typescript
-const { formatFileSize } = require('@martindev237/file-size-formatter');
+const { formatFileSize } = require('@lunel/file-size-formatter');
 console.log(formatFileSize(123456789, 1)); // "117.7 MB"
 ```
 
@@ -38,7 +38,7 @@ Compresses an image by adjusting its resolution and quality.
   - `outputFormat` : Format ('jpeg', 'png', 'webp', défaut : 'jpeg').
 
 ```javascript
-import { formatFileSize, compressImage, CompressionOptions } from '@martindev237/file-size-formatter';
+import { formatFileSize, compressImage, CompressionOptions } from '@lunel/file-size-formatter';
 import fs from 'fs';
 
 async function main() {
@@ -56,7 +56,7 @@ main();
 Compresses multiple images.
 
 ```javascript
-const { compressMultipleImages, formatFileSize } = require('@martindev237/file-size-formatter');
+const { compressMultipleImages, formatFileSize } = require('@lunel/file-size-formatter');
 const fs = require('fs');
 
 async function compressMultiple() {
