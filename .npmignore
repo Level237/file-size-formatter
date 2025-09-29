@@ -1,9 +1,9 @@
 __tests__/ 
 assets/ 
 test-formatter/ 
-
+test-formatter/ 
 .git .gitignore node_modules/ *.log coverage/
-
+test-formatter-typescript/
 dist/ 
 lib/*.js
 *.md LICENSE *.ts *.tsx *.js.map *.d.ts

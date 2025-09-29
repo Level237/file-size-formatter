@@ -18,7 +18,7 @@ npm install @martindev237/file-size-formatter
 
 Formats a size in bytes into a readable string.
 
-```javascript
+```Typescript
 const { formatFileSize } = require('@martindev237/file-size-formatter');
 console.log(formatFileSize(123456789, 1)); // "117.7 MB"
 ```
@@ -38,15 +38,17 @@ Compresses an image by adjusting its resolution and quality.
   - `outputFormat` : Format ('jpeg', 'png', 'webp', défaut : 'jpeg').
 
 ```javascript
-const { compressImage, formatFileSize } = require('@martindev237/file-size-formatter');
-const fs = require('fs');
+import { formatFileSize, compressImage, CompressionOptions } from '@martindev237/file-size-formatter';
+import fs from 'fs';
 
-async function compress() {
-  const buffer = await compressImage('./input.jpg', { maxWidth: 800, quality: 0.7 });
+async function main() {
+  const options: CompressionOptions = { maxWidth: 800, quality: 0.7 };
+  const buffer = await compressImage('./image.jpg', options);
   fs.writeFileSync('./output.jpg', buffer);
-  console.log(`Taille compressée : ${formatFileSize(buffer.length)}`);
+  console.log(`Taille : ${formatFileSize(buffer.length)}`);
 }
-compress();
+
+main();
 ```
 
 ### compressMultipleImages(inputs, options)
