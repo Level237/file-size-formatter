@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 import { promises as fs } from 'fs';
-import { CompressionOptions } from './types';
+
 /**
  * Formate une taille en bytes en chaîne lisible.
  * @param {number} bytes - Taille en bytes.
@@ -108,4 +108,3 @@ const compressMultipleImages = async (inputs, options = {}) => {
 }
 
 export { formatFileSize, compressImage, compressMultipleImages };
-module.exports = { formatFileSize,compressImage, compressMultipleImages };
