@@ -10,7 +10,7 @@
   
   "module": "index.mjs",
   
-  "types": "lib/index.d.ts",
+  "types": "dist/index.d.ts",
   
   "exports": {
   
@@ -24,7 +24,7 @@
     
     
     
-  "types": "./lib/index.d.ts",
+  "types": "./dist/index.d.ts",
   
     
     
@@ -42,7 +42,7 @@
     
     
     
-  "types": "./lib/index.d.ts",
+  "types": "./dist/index.d.ts",
   
     
     
@@ -57,15 +57,15 @@
   },
   
     
-  "./lib/types": {
+  "./dist/types": {
   
     
     
-  "import": "./lib/types.d.ts",
+  "import": "./dist/types.d.ts",
   
     
     
-  "require": "./lib/types.d.ts"
+  "require": "./dist/types.d.ts"
   
     
   }
@@ -78,7 +78,7 @@
   "index.js",
   
     
-  "lib/",
+  "dist/",
   
     
   "README.md",

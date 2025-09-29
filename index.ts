@@ -108,3 +108,8 @@ export const compressMultipleImages = async (inputs: (string | Buffer)[], option
 }
 
 
+export default {
+    formatFileSize,
+    compressImage,
+    compressMultipleImages
+};
