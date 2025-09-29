@@ -127,7 +127,7 @@
   
   "license": "MIT",
   
-  "type": "commonjs",
+  "type": "module",
   
   "publishConfig": {
   
