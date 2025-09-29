@@ -7,7 +7,7 @@ import { CompressionOptions } from './types';
  * @param {number} [decimals=2] - Nombre de décimales.
  * @returns {string} - Taille formatée (ex. "1 KB").
  */
-const formatFileSize = (bytes: number, decimal: number = 2): string => {
+export const formatFileSize = (bytes: number, decimal: number = 2): string => {
 
     if (typeof bytes !== 'number' || bytes < 0) throw new Error('Bytes must be a non-negative number');
     if(bytes===0) return "0 Bytes";
@@ -33,7 +33,7 @@ const formatFileSize = (bytes: number, decimal: number = 2): string => {
  * @returns {Promise<Buffer>} - Buffer de l'image compressée.
  */
 
-const compressImage = async (input: string | Buffer, options: CompressionOptions = {}): Promise<Buffer> => {
+export const compressImage = async (input: string | Buffer, options: CompressionOptions = {}): Promise<Buffer> => {
     const {maxWidth=1920,maxHeight=1080,quality=0.8,maxSizeMB=2,outputFormat="jpeg"}=options;
 
     try{
@@ -79,7 +79,7 @@ const compressImage = async (input: string | Buffer, options: CompressionOptions
     }
 }
 
-const compressMultipleImages = async (inputs: (string | Buffer)[], options: CompressionOptions = {}): Promise<Buffer[]> => {
+export const compressMultipleImages = async (inputs: (string | Buffer)[], options: CompressionOptions = {}): Promise<Buffer[]> => {
 
     const missingFiles: string[] = [];
     
@@ -107,5 +107,4 @@ const compressMultipleImages = async (inputs: (string | Buffer)[], options: Comp
     return Promise.all(promises);
 }
 
-export { formatFileSize, compressImage, compressMultipleImages };
-module.exports = { formatFileSize,compressImage, compressMultipleImages };
+

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2018",
-    "module": "commonjs",
+    "module": "esnext",
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "./lib",
@@ -11,5 +11,5 @@
     "moduleResolution": "node"
   },
   "include": ["index.ts", "types.ts"],
-  "exclude": ["node_modules", "__tests__"]
+  "exclude": ["node_modules", "__tests__", "index.mjs"]
 }

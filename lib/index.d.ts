@@ -5,7 +5,7 @@ import { CompressionOptions } from './types';
  * @param {number} [decimals=2] - Nombre de décimales.
  * @returns {string} - Taille formatée (ex. "1 KB").
  */
-declare const formatFileSize: (bytes: number, decimal?: number) => string;
+export declare const formatFileSize: (bytes: number, decimal?: number) => string;
 /**
  * Compresse une image en ajustant sa résolution et sa qualité.
  * @param {string | Buffer} input - Chemin du fichier ou Buffer de l'image.
@@ -17,6 +17,5 @@ declare const formatFileSize: (bytes: number, decimal?: number) => string;
  * @param {string} [options.outputFormat='jpeg'] - Format de sortie ('jpeg', 'png', 'webp').
  * @returns {Promise<Buffer>} - Buffer de l'image compressée.
  */
-declare const compressImage: (input: string | Buffer, options?: CompressionOptions) => Promise<Buffer>;
-declare const compressMultipleImages: (inputs: (string | Buffer)[], options?: CompressionOptions) => Promise<Buffer[]>;
-export { formatFileSize, compressImage, compressMultipleImages };
+export declare const compressImage: (input: string | Buffer, options?: CompressionOptions) => Promise<Buffer>;
+export declare const compressMultipleImages: (inputs: (string | Buffer)[], options?: CompressionOptions) => Promise<Buffer[]>;

@@ -6,6 +6,22 @@
   "main": "index.js",
   "module": "index.mjs",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.ts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./index.js"
+      }
+    },
+    "./lib/types": {
+      "import": "./lib/types.d.ts",
+      "require": "./lib/types.d.ts"
+    }
+  },
   "files": [
     "index.js",
     "lib/",
