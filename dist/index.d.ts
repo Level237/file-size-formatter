@@ -19,9 +19,3 @@ export declare const formatFileSize: (bytes: number, decimal?: number) => string
  */
 export declare const compressImage: (input: string | Buffer, options?: CompressionOptions) => Promise<Buffer>;
 export declare const compressMultipleImages: (inputs: (string | Buffer)[], options?: CompressionOptions) => Promise<Buffer[]>;
-declare const _default: {
-    formatFileSize: (bytes: number, decimal?: number) => string;
-    compressImage: (input: string | Buffer, options?: CompressionOptions) => Promise<Buffer>;
-    compressMultipleImages: (inputs: (string | Buffer)[], options?: CompressionOptions) => Promise<Buffer[]>;
-};
-export default _default;
