@@ -132,12 +132,7 @@
   
   "type": "module",
   
-  "publishConfig": {
   
-    
-  "@lunel:registry": "https://npm.pkg.github.com"
-  
-  },
   
   "repository": {
   
