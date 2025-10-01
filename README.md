@@ -1,0 +1,149 @@
+# @lunel/file-size-formatter
+
+A JavaScript utility for manipulating files: formatting sizes, compressing images, extracting metadata, and file encryption.
+
+## Installation
+
+```bash
+npm install @lunel/file-size-formatter
+```
+
+## Dependencies
+
+- `sharp` for image compression ([see documentation](https://sharp.pixelplumbing.com/install)).
+
+## Functions
+
+### formatFileSize(bytes, decimals = 2)
+
+Formats a size in bytes into a readable string.
+
+```typescript
+const { formatFileSize } = require('@lunel/file-size-formatter');
+console.log(formatFileSize(123456789, 1)); // "117.7 MB"
+```
+
+---
+
+### compressImage(input, options)
+
+Compresses an image by adjusting its resolution and quality.
+
+- `input` : File path or Buffer (required).
+- `options` :
+  - `maxWidth` : Maximum width (default: 1920).
+  - `maxHeight` : Max height (default: 1080).
+  - `quality` : Quality (0 to 1, default: 0.8).
+  - `maxSizeMB` : Maximum size in MB (default: 2).
+  - `outputFormat` : Format ('jpeg', 'png', 'webp', default: 'jpeg').
+
+```typescript
+import { formatFileSize, compressImage, CompressionOptions } from '@lunel/file-size-formatter';
+import fs from 'fs';
+
+async function main() {
+  const options: CompressionOptions = { maxWidth: 800, quality: 0.7 };
+  const buffer = await compressImage('./image.jpg', options);
+  fs.writeFileSync('./output.jpg', buffer);
+  console.log(`Size: ${formatFileSize(buffer.length)}`);
+}
+
+main();
+```
+
+---
+
+### compressMultipleImages(inputs, options)
+
+Compresses multiple images.
+
+```typescript
+const { compressMultipleImages, formatFileSize } = require('@lunel/file-size-formatter');
+const fs = require('fs');
+
+async function compressMultiple() {
+  const buffers = await compressMultipleImages(['./image1.jpg', './image2.jpg'], { maxWidth: 800 });
+  buffers.forEach((buffer, i) => {
+    fs.writeFileSync(`./compressed-image${i + 1}.jpg`, buffer);
+    console.log(`Image ${i + 1} size: ${formatFileSize(buffer.length)}`);
+  });
+}
+compressMultiple();
+```
+
+---
+
+### extractMetadata(filePath)
+
+Extracts metadata from a file (e.g., image dimensions, MIME type, size, etc.).
+
+```typescript
+import { extractMetadata } from '@lunel/file-size-formatter';
+
+async function getMetadata() {
+  const metadata = await extractMetadata('assets/1.png');
+  console.log(metadata);
+  /*
+{
+  size: '1.1 MB',
+  created: 2025-10-01T17:51:44.269Z,
+  modified: 2025-09-15T09:00:39.000Z,
+  width: 1080,
+  height: 1080
+}
+  */
+}
+
+getMetadata();
+```
+
+---
+
+### encryptFile(filePath, password)
+
+Encrypts a file with a password/key and generates a `.enc` file.
+
+```typescript
+import { encryptFile } from '@lunel/file-size-formatter';
+import { promises as fs } from 'fs';
+
+async function encryptFileTest() {
+  const encrypted = await encryptFile('assets/level.png', 'mySecretKey');
+  await fs.writeFile('assets/encrypt/level.enc', encrypted);
+}
+
+encryptFileTest();
+```
+
+---
+
+### decryptFile(encryptedBuffer, password)
+
+Decrypts a previously encrypted file and restores it to its original format.
+
+```typescript
+import { decryptFile } from '@lunel/file-size-formatter';
+import { promises as fs } from 'fs';
+
+async function decryptFileTest() {
+  const file = await fs.readFile('assets/encrypt/level.enc');
+  const decrypted = await decryptFile(file, 'mySecretKey');
+  await fs.writeFile('assets/decrypt/level.png', decrypted);
+}
+
+decryptFileTest();
+```
+
+---
+
+## Tests
+
+Run `npm test` with Jest to validate.
+
+## Contribute
+
+Open an issue or pull request on [GitHub](https://github.com/Level237/file-size-formatter).
+
+## License
+
+MIT

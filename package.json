@@ -4,7 +4,7 @@
   
   "version": "1.0.4",
   
-  "description": "A utility for manipulating files: formatting sizes, calculating hashes, compressing images",
+  "description": "A utility for manipulating files: formatting sizes, compressing images, reading metadata, encrypting files.",
   
   "main": "index.js",
   
@@ -106,7 +106,8 @@
     
   "file",
   
-    
+    "encrypting files",
+    "decryptFile",
   "size",
   
     

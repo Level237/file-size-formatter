@@ -19,3 +19,6 @@ export declare const formatFileSize: (bytes: number, decimal?: number) => string
  */
 export declare const compressImage: (input: string | Buffer, options?: CompressionOptions) => Promise<Buffer>;
 export declare const compressMultipleImages: (inputs: (string | Buffer)[], options?: CompressionOptions) => Promise<Buffer[]>;
+export declare const extractMetadata: (filePath: string) => Promise<object>;
+export declare const encryptFile: (filePath: string, password: string) => Promise<Buffer>;
+export declare const decryptFile: (encryptedBuffer: Buffer, password: string) => Promise<Buffer>;

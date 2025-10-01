@@ -1,6 +1,8 @@
 const { formatFileSize,compressImage, compressMultipleImages } = require('../index.js');
 const path = require('path');
 const fs = require('fs');
+const { encryptFile } = require('../index.js');
+const { decryptFile } = require('../index.js');
 test('formate correctement 1024 bytes en 1 KB', () => {
     expect(formatFileSize(1024)).toBe('1 KB');
   });
@@ -46,5 +48,30 @@ test('formate correctement 1024 bytes en 1 KB', () => {
   
     test('lève une erreur pour un fichier inexistant', async () => {
       await expect(compressImage('inexistant.jpg')).rejects.toThrow("Erreur lors de la compression de l'image");
+    });
+  });
+
+  describe('encryptFile and decryptFile', () => {
+    const testFilePath = path.join(__dirname, 'assets/output.png');
+    const password = 'mySecretPassword';
+  
+    beforeAll(() => {
+      fs.writeFileSync(testFilePath, 'Contenu secret');
+    });
+  
+    
+  
+    test('chiffre et déchiffre un fichier', async () => {
+      const encrypted = await encryptFile(testFilePath, password);
+      expect(encrypted).toBeInstanceOf(Buffer);
+      expect(encrypted.length).toBeGreaterThan(0);
+  
+      const decrypted = await decryptFile(encrypted, password);
+      expect(decrypted.toString()).toBe('Contenu secret');
+    });
+  
+    test('lève une erreur avec mauvais mot de passe', async () => {
+      const encrypted = await encryptFile(testFilePath, password);
+      await expect(decryptFile(encrypted, 'wrongPassword')).rejects.toThrow();
     });
   });

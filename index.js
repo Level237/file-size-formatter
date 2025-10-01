@@ -1,12 +1,15 @@
-const sharp = require('sharp');
-const fs = require('fs').promises
+import sharp from 'sharp';
+import { promises as fs } from 'fs';
+import crypto from 'crypto';
+import path from 'path';
+
 /**
  * Formate une taille en bytes en chaîne lisible.
  * @param {number} bytes - Taille en bytes.
  * @param {number} [decimals=2] - Nombre de décimales.
  * @returns {string} - Taille formatée (ex. "1 KB").
  */
-function formatFileSize(bytes,decimal=2){
+const formatFileSize = (bytes, decimal = 2) => {
 
     if (typeof bytes !== 'number' || bytes < 0) throw new Error('Bytes must be a non-negative number');
     if(bytes===0) return "0 Bytes";
@@ -32,7 +35,7 @@ function formatFileSize(bytes,decimal=2){
  * @returns {Promise<Buffer>} - Buffer de l'image compressée.
  */
 
-async function compressImage(input,options={}){
+const compressImage = async (input, options = {}) => {
     const {maxWidth=1920,maxHeight=1080,quality=0.8,maxSizeMB=2,outputFormat="jpeg"}=options;
 
     try{
@@ -78,9 +81,9 @@ async function compressImage(input,options={}){
     }
 }
 
-async function compressMultipleImages(inputs, options = {}) {
+const compressMultipleImages = async (inputs, options = {}) => {
 
-    const missingFiles = [];
+    const missingFiles= [];
     
     for (const input of inputs) {
         // Si c'est un Buffer, pas besoin de vérifier l'existence
@@ -106,4 +109,46 @@ async function compressMultipleImages(inputs, options = {}) {
     return Promise.all(promises);
 }
 
-module.exports = { formatFileSize,compressImage, compressMultipleImages };
+// Extraction des métadonnées d'un fichier
+const extractMetadata = async (filePath) => {
+    const stats = await fs.stat(filePath);
+    const metadata = {
+      size: formatFileSize(stats.size),
+      created: stats.birthtime,
+      modified: stats.mtime,
+      width:0,
+      height:0
+    };
+    const ext = path.extname(filePath).toLowerCase();
+    if (ext === '.jpg' || ext === '.png' || ext === '.webp') {
+      const image = sharp(filePath);
+      const imgMeta = await image.metadata();
+      metadata.width = imgMeta.width;
+      metadata.height = imgMeta.height;
+    }
+    return metadata;
+  };
+  
+  // Chiffrement d'un fichier
+  const encryptFile = (filePath, password) => {
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath).then((inputBuffer) => {
+        const key = crypto.scryptSync(password, 'salt', 32);
+        const iv = crypto.randomBytes(16);
+        const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+        const encrypted = Buffer.concat([iv, cipher.update(inputBuffer), cipher.final()]);
+        resolve(encrypted);
+      }).catch(reject);
+    });
+  };
+  const decryptFile = (encryptedBuffer, password) => {
+    return new Promise((resolve, reject) => {
+      const key = crypto.scryptSync(password, 'salt', 32);
+      const iv = encryptedBuffer.slice(0, 16);
+      const encrypted = encryptedBuffer.slice(16);
+      const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+      const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
+      resolve(decrypted);
+    });
+  };
+  export { formatFileSize, compressImage, compressMultipleImages, extractMetadata, encryptFile, decryptFile };

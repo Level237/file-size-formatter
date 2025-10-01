@@ -1,5 +1,7 @@
 import sharp from 'sharp';
 import { promises as fs } from 'fs';
+import crypto from 'crypto';
+import path from 'path';
 
 /**
  * Formate une taille en bytes en chaîne lisible.
@@ -107,4 +109,46 @@ const compressMultipleImages = async (inputs, options = {}) => {
     return Promise.all(promises);
 }
 
-export { formatFileSize, compressImage, compressMultipleImages };
+// Extraction des métadonnées d'un fichier
+const extractMetadata = async (filePath) => {
+    const stats = await fs.stat(filePath);
+    const metadata = {
+      size: formatFileSize(stats.size),
+      created: stats.birthtime,
+      modified: stats.mtime,
+      width:0,
+      height:0
+    };
+    const ext = path.extname(filePath).toLowerCase();
+    if (ext === '.jpg' || ext === '.png' || ext === '.webp') {
+      const image = sharp(filePath);
+      const imgMeta = await image.metadata();
+      metadata.width = imgMeta.width;
+      metadata.height = imgMeta.height;
+    }
+    return metadata;
+  };
+  
+  // Chiffrement d'un fichier
+  const encryptFile = (filePath, password) => {
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath).then((inputBuffer) => {
+        const key = crypto.scryptSync(password, 'salt', 32);
+        const iv = crypto.randomBytes(16);
+        const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+        const encrypted = Buffer.concat([iv, cipher.update(inputBuffer), cipher.final()]);
+        resolve(encrypted);
+      }).catch(reject);
+    });
+  };
+  const decryptFile = (encryptedBuffer, password) => {
+    return new Promise((resolve, reject) => {
+      const key = crypto.scryptSync(password, 'salt', 32);
+      const iv = encryptedBuffer.slice(0, 16);
+      const encrypted = encryptedBuffer.slice(16);
+      const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+      const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
+      resolve(decrypted);
+    });
+  };
+  export { formatFileSize, compressImage, compressMultipleImages, extractMetadata, encryptFile, decryptFile };
