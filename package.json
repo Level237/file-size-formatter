@@ -2,7 +2,7 @@
   
   "name": "@lunel/file-size-formatter",
   
-  "version": "1.0.4",
+  "version": "1.0.5",
   
   "description": "A utility for manipulating files: formatting sizes, compressing images, reading metadata, encrypting files.",
   
@@ -106,8 +106,13 @@
     
   "file",
   
-    "encrypting files",
-    "decryptFile",
+    
+  "encrypting files",
+  
+    
+  "decryptFile",
+  
+    
   "size",
   
     
@@ -132,8 +137,6 @@
   "license": "MIT",
   
   "type": "module",
-  
-  
   
   "repository": {
   
