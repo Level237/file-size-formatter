@@ -2,7 +2,7 @@
   
   "name": "@lunel/file-size-formatter",
   
-  "version": "1.0.5",
+  "version": "1.0.6",
   
   "description": "A utility for manipulating files: formatting sizes, compressing images, reading metadata, encrypting files.",
   
