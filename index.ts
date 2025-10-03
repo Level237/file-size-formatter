@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 import crypto from 'crypto';
 import { CompressionOptions } from './types';
 import path from 'path';
+import axios from 'axios';
 /**
  * Formate une taille en bytes en chaîne lisible.
  * @param {number} bytes - Taille en bytes.
@@ -149,4 +150,58 @@ export const decryptFile = (encryptedBuffer: Buffer, password: string): Promise<
     const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
     resolve(decrypted);
   });
+};
+
+export const downloadAndCompress=async (url:string,options:CompressionOptions={}):Promise<Buffer> =>{
+
+  try{
+    const response=await axios.get(url,{responseType:'arraybuffer'});
+    return compressImage(response.data,options)
+  }catch(e){
+    throw new Error(`Erreur lors de la compression de l’image`)
+  }
+
+}
+
+export const convertFormat = async (filePath: string, outputFormat: 'jpeg' | 'png' | 'webp'): Promise<Buffer> => {
+  const ext = path.extname(filePath).toLowerCase();
+  if (['.jpg', '.png', '.webp'].includes(ext)) {
+    return sharp(filePath).toFormat(outputFormat).toBuffer();
+  } else {
+    throw new Error('Type de fichier non supporté pour conversion');
+  }
+};
+
+export const analyzeFolder = async (folderPath: string): Promise<object> => {
+  const stats = { totalSize: 0, fileCount: 0, files: [] as any[] };
+
+  try {
+    const files = await fs.readdir(folderPath);
+
+    for (const file of files) {
+      const filePath = path.join(folderPath, file);
+
+      try {
+        const stat = await fs.stat(filePath);
+
+        if (stat.isFile()) {
+          stats.totalSize += stat.size;
+          stats.fileCount++;
+          stats.files.push({ name: file, size: stat.size });
+        }
+        else if (stat.isDirectory()) {
+          const subStats: any = await analyzeFolder(filePath);
+          stats.totalSize += subStats.totalSize;
+          stats.fileCount += subStats.fileCount;
+          stats.files.push(...subStats.files);
+        }
+      } catch (err) {
+        console.warn(`Impossible d'accéder à ${filePath}:`, err);
+      }
+    }
+  } catch (err) {
+    console.error(`Erreur lors de la lecture du dossier ${folderPath}:`, err);
+  }
+
+  return stats;
 };

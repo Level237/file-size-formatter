@@ -1,6 +1,6 @@
 # @lunel/file-size-formatter
 
-A JavaScript utility for manipulating files: formatting sizes, compressing images, extracting metadata, and file encryption.
+A JavaScript utility for manipulating files: formatting sizes, compressing images, extracting metadata, encryption/decryption, folder analysis, downloading & compressing images, and format conversion.
 
 ## Installation
 
@@ -83,15 +83,6 @@ import { extractMetadata } from '@lunel/file-size-formatter';
 async function getMetadata() {
   const metadata = await extractMetadata('assets/1.png');
   console.log(metadata);
-  /*
-{
-  size: '1.1 MB',
-  created: 2025-10-01T17:51:44.269Z,
-  modified: 2025-09-15T09:00:39.000Z,
-  width: 1080,
-  height: 1080
-}
-  */
 }
 
 getMetadata();
@@ -132,6 +123,59 @@ async function decryptFileTest() {
 }
 
 decryptFileTest();
+```
+
+---
+
+### analyzeFolder(path)
+
+Analyzes a folder and returns statistics (total size + individual file sizes).
+
+```typescript
+import { analyzeFolder, formatFileSize } from '@lunel/file-size-formatter';
+
+async function main() {
+  const stats: any = await analyzeFolder("utils");
+  console.log(`Total size: ${formatFileSize(stats.totalSize)}`);
+  stats.files.forEach((file: any) => console.log(`${file.name} : ${formatFileSize(file.size)}`));
+}
+main();
+```
+
+---
+
+### downloadAndCompress(url, options)
+
+Downloads an image from a URL and compresses it according to the given options.
+
+```typescript
+import { downloadAndCompress } from '@lunel/file-size-formatter';
+import fs from 'fs/promises';
+
+async function main() {
+  const buffer = await downloadAndCompress('https://example.com/image.jpg', { maxWidth: 500 });
+  await fs.writeFile('./compressed.jpg', buffer);
+  console.log('Download and compression successful');
+}
+main();
+```
+
+---
+
+### convertFormat(filePath, format)
+
+Converts an image from one format to another (e.g., PNG → WebP).
+
+```typescript
+import { convertFormat } from '@lunel/file-size-formatter';
+import fs from 'fs/promises';
+
+async function main() {
+  const buffer = await convertFormat('assets/1.png', 'webp');
+  await fs.writeFile('convert.webp', buffer);
+  console.log('Conversion successful');
+}
+main();
 ```
 
 ---

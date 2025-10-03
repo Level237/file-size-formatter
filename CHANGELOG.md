@@ -1,50 +1,44 @@
-# 📦 Changelog
+# Changelog
 
-## [1.0.5] - 2025-09-29  
-### 🚀 New Release – File Management Features Added  
-
-#### ✨ New Features  
-- **`extractMetadata(filePath: string)`**  
-  Extracts file metadata (e.g., image dimensions, MIME type, size, etc.).  
+## [1.0.6] - 2025-09-29
+### ✨ Added
+- **`analyzeFolder(path)`**  
+  Analyze a folder and return statistics:  
+  - Total folder size  
+  - List of files with their individual sizes  
+  Example:
   ```ts
-  import { extractMetadata } from "@lunel/file-size-formatter";
+  import { analyzeFolder, formatFileSize } from '@lunel/file-size-formatter';
 
-  const metadata = await extractMetadata("assets/1.png");
-  console.log(metadata);
+  const stats = await analyzeFolder("utils");
+  console.log(`Total size: ${formatFileSize(stats.totalSize)}`);
+  stats.files.forEach(file => console.log(`${file.name} : ${formatFileSize(file.size)}`));
   ```
 
-- **`encryptFile(filePath: string, password: string)`**  
-  Encrypts a file using a password/key and generates an `.enc` file.  
+- **`downloadAndCompress(url, options)`**  
+  Download an image from a URL and compress it according to the defined options (e.g., resizing).  
+  Example:
   ```ts
-  import { encryptFile } from "@lunel/file-size-formatter";
-  import { promises as fs } from "fs";
+  import { downloadAndCompress } from '@lunel/file-size-formatter';
+  import fs from 'fs/promises';
 
-  const encrypted = await encryptFile("assets/level.png", "secretKey");
-  await fs.writeFile("assets/encrypt/level.enc", encrypted);
+  const buffer = await downloadAndCompress('https://example.com/image.jpg', { maxWidth: 500 });
+  await fs.writeFile('./compressed.jpg', buffer);
   ```
 
-- **`decryptFile(encryptedBuffer: Buffer, password: string)`**  
-  Decrypts a previously encrypted file and restores it to its original format.  
+- **`convertFormat(filePath, format)`**  
+  Convert an image from one format to another (e.g., PNG → WebP).  
+  Example:
   ```ts
-  import { decryptFile } from "@lunel/file-size-formatter";
-  import { promises as fs } from "fs";
+  import { convertFormat } from '@lunel/file-size-formatter';
+  import fs from 'fs/promises';
 
-  const encrypted = await fs.readFile("assets/encrypt/level.enc");
-  const decrypted = await decryptFile(encrypted, "secretKey");
-  await fs.writeFile("assets/decrypt/level.png", decrypted);
+  const buffer = await convertFormat('assets/1.png', 'webp');
+  await fs.writeFile('convert.webp', buffer);
   ```
+
+### 🛠 Improvements
+- General performance improvements for image processing.  
+- More robust error handling during conversions and downloads.  
 
 ---
-
-#### 🛠️ Improvements  
-- Improved compatibility with `fs.promises`.  
-- Enhanced error handling for encryption/decryption workflows.  
-
----
-
-#### 📌 Notes  
-- These functions are available starting from version **1.0.5**.  
-- Update your package with:  
-  ```sh
-  npm install @lunel/file-size-formatter@latest
-  ```

@@ -22,3 +22,6 @@ export declare const compressMultipleImages: (inputs: (string | Buffer)[], optio
 export declare const extractMetadata: (filePath: string) => Promise<object>;
 export declare const encryptFile: (filePath: string, password: string) => Promise<Buffer>;
 export declare const decryptFile: (encryptedBuffer: Buffer, password: string) => Promise<Buffer>;
+export declare const downloadAndCompress: (url: string, options?: CompressionOptions) => Promise<Buffer>;
+export declare const convertFormat: (filePath: string, outputFormat: "jpeg" | "png" | "webp") => Promise<Buffer>;
+export declare const analyzeFolder: (folderPath: string) => Promise<object>;

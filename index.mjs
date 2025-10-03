@@ -2,14 +2,14 @@ import sharp from 'sharp';
 import { promises as fs } from 'fs';
 import crypto from 'crypto';
 import path from 'path';
-
+import axios from 'axios';
 /**
  * Formate une taille en bytes en chaîne lisible.
  * @param {number} bytes - Taille en bytes.
  * @param {number} [decimals=2] - Nombre de décimales.
  * @returns {string} - Taille formatée (ex. "1 KB").
  */
-const formatFileSize = (bytes, decimals = 2) => {
+const formatFileSize = (bytes, decimal = 2) => {
 
     if (typeof bytes !== 'number' || bytes < 0) throw new Error('Bytes must be a non-negative number');
     if(bytes===0) return "0 Bytes";
@@ -151,4 +151,52 @@ const extractMetadata = async (filePath) => {
       resolve(decrypted);
     });
   };
-  export { formatFileSize, compressImage, compressMultipleImages, extractMetadata, encryptFile, decryptFile };
+
+  const downloadAndCompress=async (url,options)=>{
+    const response=await axios.get(url,{responseType:'arraybuffer'});
+    return compressImage(response.data,options)
+  }
+  
+  const convertFormat = async (filePath,outputFormat)=> {
+    const ext = path.extname(filePath).toLowerCase();
+    if (['.jpg', '.png', '.webp'].includes(ext)) {
+      return sharp(filePath).toFormat(outputFormat).toBuffer();
+    } else {
+      throw new Error('Type de fichier non supporté pour conversion');
+    }
+  };
+  
+  const analyzeFolder = async (folderPath)=> {
+    const stats = { totalSize: 0, fileCount: 0, files:[]};
+
+  try {
+    const files = await fs.readdir(folderPath);
+
+    for (const file of files) {
+      const filePath = path.join(folderPath, file);
+
+      try {
+        const stat = await fs.stat(filePath);
+
+        if (stat.isFile()) {
+          stats.totalSize += stat.size;
+          stats.fileCount++;
+          stats.files.push({ name: file, size: stat.size });
+        }
+        else if (stat.isDirectory()) {
+          const subStats = await analyzeFolder(filePath);
+          stats.totalSize += subStats.totalSize;
+          stats.fileCount += subStats.fileCount;
+          stats.files.push(...subStats.files);
+        }
+      } catch (err) {
+        console.warn(`Impossible d'accéder à ${filePath}:`, err);
+      }
+    }
+  } catch (err) {
+    console.error(`Erreur lors de la lecture du dossier ${folderPath}:`, err);
+  }
+
+  return stats;
+  };
+  export { formatFileSize, compressImage, compressMultipleImages, extractMetadata, encryptFile, decryptFile,downloadAndCompress,convertFormat,analyzeFolder };
