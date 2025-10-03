@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.6] - 2025-10-3
+## [1.0.6] - 2025-10-03
 ### ✨ Added
 - **`analyzeFolder(path)`**  
   Analyze a folder and return statistics:  
